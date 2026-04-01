@@ -12,7 +12,7 @@
 
 | ID | Feature | Status | Spec | Created |
 |----|---------|--------|------|---------|
-| PROJ-1 | User Authentication | Planned | [PROJ-1-user-authentication.md](PROJ-1-user-authentication.md) | 2026-04-01 |
+| PROJ-1 | User Authentication | In Review | [PROJ-1-user-authentication.md](PROJ-1-user-authentication.md) | 2026-04-01 |
 | PROJ-2 | Ideen einreichen | Planned | [PROJ-2-ideen-einreichen.md](PROJ-2-ideen-einreichen.md) | 2026-04-01 |
 | PROJ-3 | Ideenliste | Planned | [PROJ-3-ideenliste.md](PROJ-3-ideenliste.md) | 2026-04-01 |
 | PROJ-4 | Voting | Planned | [PROJ-4-voting.md](PROJ-4-voting.md) | 2026-04-01 |

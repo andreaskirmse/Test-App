@@ -59,7 +59,7 @@ npm run start      # Production server
 
 ## Product Context
 
-@docs/PRD.md
+
 
 ## Feature Overview
 
