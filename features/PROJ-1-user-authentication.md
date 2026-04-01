@@ -1,6 +1,6 @@
 # PROJ-1: User Authentication
 
-## Status: In Review
+## Status: Deployed
 **Created:** 2026-04-01
 **Last Updated:** 2026-04-01
 
@@ -400,4 +400,11 @@ Card, Input, Button, Form, Label (all pre-installed)
 - **Production Ready:** PENDING — remaining open bugs are low priority; no blocking issues
 
 ## Deployment
-_To be added by /deploy_
+
+**Deployed:** 2026-04-01
+**Production URL:** https://test-app-jade-eta.vercel.app/
+**Platform:** Vercel (auto-deploy from GitHub main branch)
+
+### Notes
+- Homepage (`/`) still shows Next.js default page — redirect to `/login` pending
+- `/board` shows placeholder until PROJ-3 (Ideenliste) is implemented
