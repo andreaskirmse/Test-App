@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import { createClient } from "@/lib/supabase"
 import { IdeaCard } from "@/components/ideas/idea-card"
 import { IdeaListHeader } from "@/components/ideas/idea-list-header"
 import { IdeaListEmpty } from "@/components/ideas/idea-list-empty"
@@ -45,6 +46,14 @@ export function IdeaList() {
   const [data, setData] = useState<IdeasResponse | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [currentUserId, setCurrentUserId] = useState<string | undefined>(undefined)
+
+  useEffect(() => {
+    const supabase = createClient()
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setCurrentUserId(user?.id)
+    })
+  }, [])
 
   const fetchIdeas = useCallback(async () => {
     setLoading(true)
@@ -105,7 +114,12 @@ export function IdeaList() {
         <>
           <div className="space-y-4">
             {data.ideas.map((idea) => (
-              <IdeaCard key={idea.id} {...idea} />
+              <IdeaCard
+                key={idea.id}
+                {...idea}
+                currentUserId={currentUserId}
+                onRefresh={fetchIdeas}
+              />
             ))}
           </div>
 
