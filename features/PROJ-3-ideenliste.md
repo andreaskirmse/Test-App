@@ -8,13 +8,14 @@
 - PROJ-2: Ideen einreichen (damit es Ideen gibt, die angezeigt werden)
 
 ## User Stories
-- Als eingeloggter Nutzer möchte ich alle eingereichten Ideen einsehen, um mich über Vorschläge zu informieren.
+- Als Besucher möchte ich alle eingereichten Ideen einsehen, ohne mich einloggen zu müssen, um mich über Vorschläge zu informieren.
+- Als Besucher möchte ich die Vote-Counts der Ideen sehen, um beliebte Ideen zu erkennen.
 - Als eingeloggter Nutzer möchte ich Ideen nach Anzahl der Votes sortiert sehen, um beliebte Ideen zu finden.
 - Als eingeloggter Nutzer möchte ich Ideen nach Erstellungsdatum sortiert sehen, um neue Ideen zu entdecken.
 - Als eingeloggter Nutzer möchte ich die Ideenliste durchblättern, falls es viele Ideen gibt.
 
 ## Acceptance Criteria
-- [ ] Nur eingeloggte Nutzer können die Ideenliste einsehen — nicht eingeloggte Besucher werden zum Login weitergeleitet
+- [ ] Das Ideenboard ist öffentlich einsehbar — nicht eingeloggte Besucher können Ideen, Votes und Kommentare sehen, aber nicht interagieren (voten, kommentieren)
 - [ ] Jede Idee zeigt: Titel, Beschreibung (gekürzt), Anzahl Votes, Erstellungsdatum, Autor (anonym oder Name)
 - [ ] Sortierung: Standard nach Votes absteigend, Option nach Datum absteigend
 - [ ] Pagination: 10 Ideen pro Seite

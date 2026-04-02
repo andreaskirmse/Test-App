@@ -7,52 +7,49 @@ const RATE_LIMIT_WINDOW_MINUTES = 60
 
 const PAGE_SIZE = 10
 
+interface RawIdea {
+  id: string
+  user_id: string
+  title: string
+  description: string
+  status: string
+  created_at: string
+  author_email: string | null
+  vote_count: number
+  user_has_voted: boolean
+}
+
 /**
  * GET /api/ideas
- * Returns ideas visible to the current user:
- * - All approved ideas
- * - The user's own pending ideas
+ * Returns ideas visible to the current user (auth optional):
+ * - Logged-out: all approved ideas, vote counts, user_has_voted = false
+ * - Logged-in: approved ideas + own pending ideas, with user_has_voted
  *
  * Query params:
- *   ?sort=votes|date  — sorting mode (votes falls back to date until PROJ-4)
+ *   ?sort=votes|date  — sorting mode (server-side via RPC)
  *   ?page=1           — 1-based page number, 10 items per page
  */
 export async function GET(request: NextRequest) {
   const supabase = await createServerSupabaseClient()
 
-  // Check authentication
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser()
-
-  if (authError || !user) {
-    return NextResponse.json(
-      { error: "Nicht authentifiziert" },
-      { status: 401 }
-    )
-  }
+  // Auth is optional — logged-out users can still browse
+  const { data: { user } } = await supabase.auth.getUser()
 
   // Parse query params
   const { searchParams } = new URL(request.url)
   const sortParam = searchParams.get("sort")
   const pageParam = searchParams.get("page")
 
-  // Validate sort — only "votes" and "date" are accepted; default to "date"
   const sort = sortParam === "votes" || sortParam === "date" ? sortParam : "date"
-
-  // Validate page — must be >= 1
   const page = Math.max(parseInt(pageParam || "1", 10) || 1, 1)
-  const offset = (page - 1) * PAGE_SIZE
 
-  // Sort by date descending (votes sorting falls back to date until PROJ-4)
-  // Join against profiles to get author email for display name
-  // RLS handles visibility: approved ideas + own ideas (any status)
-  const { data: ideas, error, count } = await supabase
-    .from("ideas")
-    .select("id, user_id, title, description, status, created_at, profiles(email)", { count: "exact" })
-    .order("created_at", { ascending: false })
-    .range(offset, offset + PAGE_SIZE - 1)
+  // RPC handles server-side sorting by vote count across all pages
+  const { data, error } = await supabase.rpc("get_ideas_paginated", {
+    p_sort: sort,
+    p_page: page,
+    p_page_size: PAGE_SIZE,
+    p_user_id: user?.id ?? null,
+  })
 
   if (error) {
     return NextResponse.json(
@@ -61,34 +58,26 @@ export async function GET(request: NextRequest) {
     )
   }
 
-  // Map ideas to include author_name, hiding raw email details
-  const mappedIdeas = (ideas ?? []).map((idea) => {
-    // profiles comes back as an object (single FK relation via user_id) or null
-    const profileData = idea.profiles
-    const profile = Array.isArray(profileData) ? profileData[0] as { email: string } | undefined : profileData as { email: string } | null
-    let authorName = "Anonym"
-    if (profile?.email) {
-      // Use the part before @ as a display name
-      authorName = profile.email.split("@")[0]
-    }
+  const raw = data as { ideas: RawIdea[]; total: number }
 
-    return {
-      id: idea.id,
-      user_id: idea.user_id,
-      title: idea.title,
-      description: idea.description,
-      status: idea.status,
-      created_at: idea.created_at,
-      author_name: authorName,
-      vote_count: 0, // Placeholder until PROJ-4 adds the votes table
-    }
-  })
+  const ideas = (raw.ideas ?? []).map((idea) => ({
+    id: idea.id,
+    user_id: idea.user_id,
+    title: idea.title,
+    description: idea.description,
+    status: idea.status,
+    created_at: idea.created_at,
+    author_name: idea.author_email ? idea.author_email.split("@")[0] : "Anonym",
+    vote_count: idea.vote_count,
+    user_has_voted: idea.user_has_voted,
+  }))
 
-  const totalPages = Math.ceil((count ?? 0) / PAGE_SIZE)
+  const total = raw.total ?? 0
+  const totalPages = Math.ceil(total / PAGE_SIZE)
 
   return NextResponse.json({
-    ideas: mappedIdeas,
-    total: count,
+    ideas,
+    total,
     page,
     page_size: PAGE_SIZE,
     total_pages: totalPages,
