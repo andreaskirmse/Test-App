@@ -14,18 +14,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
   const { id } = await context.params
   const supabase = await createServerSupabaseClient()
 
-  // Check authentication
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser()
-
-  if (authError || !user) {
-    return NextResponse.json(
-      { error: "Nicht authentifiziert" },
-      { status: 401 }
-    )
-  }
+  // Auth is optional — logged-out users can see approved ideas (RLS handles visibility)
 
   // Validate UUID format
   const uuidRegex =

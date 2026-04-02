@@ -105,6 +105,10 @@ export function IdeaCard({
   }
 
   async function onEditSubmit(values: UpdateIdeaFormValues) {
+    if (values.title === title && values.description === description) {
+      setEditOpen(false)
+      return
+    }
     setEditError(null)
     try {
       const res = await fetch(`/api/ideas/${id}`, {
