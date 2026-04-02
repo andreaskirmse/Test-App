@@ -1,6 +1,6 @@
 # PROJ-4: Voting
 
-## Status: In Review
+## Status: Deployed
 **Created:** 2026-04-01
 **Last Updated:** 2026-04-02
 
@@ -343,4 +343,8 @@ Assessment based on code/Tailwind class analysis:
 - **Recommendation:** The voting feature is production-ready for the current UI. The 2 medium bugs (BUG-2, BUG-6) only affect the single-idea detail API which has no corresponding UI page yet. They should be fixed before a detail page is built. BUG-4 and BUG-5 are low priority improvements.
 
 ## Deployment
-_To be added by /deploy_
+
+- **Deployed:** 2026-04-02
+- **Commit:** a453880
+- **Method:** Push to main → Vercel auto-deploy
+- **Open Bugs at Deploy:** BUG-2 (Medium, detail API missing vote data — no UI uses it yet), BUG-4 (Low, no rate limiting), BUG-5 (Low, SECURITY DEFINER note), BUG-6 (Medium, detail API requires auth — no detail page UI yet)
