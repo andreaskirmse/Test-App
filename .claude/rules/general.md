@@ -66,3 +66,20 @@ After completing work on any feature, you MUST update tracking files. Follow thi
 - After completing a skill, suggest the next skill to the user
 - Format: "Next step: Run `/skillname` to [action]"
 - Handoffs are always user-initiated, never automatic
+
+## QA Results in Feature Specs (MANDATORY)
+After `/qa` completes, only write this to the feature spec — nothing more:
+
+**Allowed:**
+- One-line overall result: `Acceptance Criteria X/Y passed, Build: PASS`
+- Open bugs as a short list: `BUG-X (Severity): one-line description — priority`
+
+**Not allowed — never write these to the feature spec:**
+- Detailed test case logs (AC-1: [x] ... Status: PASS)
+- Step-by-step reproduction instructions
+- Fixed/resolved bugs — the fix is in the code, the commit has the context
+- Security audit checklists with individual line-by-line results
+- Regression testing details
+- Cross-browser or responsive testing checklists
+
+**Why:** Feature specs are read by agents working on subsequent features. Detailed QA logs add noise without value — open bugs are the only actionable information.

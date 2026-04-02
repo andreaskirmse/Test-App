@@ -36,6 +36,9 @@
 - UI: Einfache Textarea mit shadcn/ui
 - Performance: Lazy Loading für viele Kommentare
 
+## Notes
+- **BUG-4 (PROJ-3):** Idea cards truncate descriptions at 150 chars with `…` but have no "Mehr lesen" link. When the detail page is built here, add a "Mehr lesen" link to `idea-card.tsx` that navigates to the idea detail page.
+
 ---
 <!-- Sections below are added by subsequent skills -->
 
