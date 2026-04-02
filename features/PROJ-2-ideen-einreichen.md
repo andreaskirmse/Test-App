@@ -1,6 +1,6 @@
                 # PROJ-2: Ideen einreichen
 
-## Status: In Review
+## Status: Deployed
 **Created:** 2026-04-01
 **Last Updated:** 2026-04-02
 
@@ -329,4 +329,20 @@ Keine neuen Pakete notwendig — alles bereits im Projekt vorhanden.
 - **Recommendation:** Fix BUG-2 (whitespace validation) before deployment. BUG-1 and BUG-3 can wait for PROJ-3. BUG-4 is cosmetic.
 
 ## Deployment
-_To be added by /deploy_
+
+**Deployed:** 2026-04-02
+**Production URL:** https://test-app.vercel.app (latest: https://test-k8gjepsll-andreas-kirmses-projects.vercel.app)
+**Vercel Project:** andreas-kirmses-projects/test-app
+**Git commit:** 6070d8d
+
+### Pre-deployment checks
+- [x] `npm run build` passed (Turbopack, 13 routes)
+- [x] `npm run lint` passed
+- [x] QA approved (0 critical/high bugs; BUG-2 whitespace validation confirmed already fixed via `.trim()` in Zod schema)
+- [x] Database migration `create_ideas_table` applied to Supabase production
+- [x] All code committed and pushed to main
+
+### Known deferred issues
+- BUG-1: No link to individual idea in success state (pending PROJ-3 idea detail pages)
+- BUG-3: No `updated_at` column (pending next sprint)
+- BUG-4: Some user-facing text uses ASCII approximations for umlauts (cosmetic)
