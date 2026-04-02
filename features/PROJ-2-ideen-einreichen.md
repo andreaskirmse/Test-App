@@ -433,8 +433,10 @@ Keine neuen Pakete notwendig — alles bereits im Projekt vorhanden.
 - Button opens `/board` in a **new tab** (`target="_blank"`) so the user can browse existing ideas without losing their in-progress form input
 - File changed: `src/components/ideas/submit-idea-form.tsx`
 
-### Edit & Delete UI added (fix — was planned but missing from frontend sprint)
-**Commit:** 3e1dfac | **Date:** 2026-04-02 | **Status:** In Review (QA pending)
+### Edit & Delete UI added + all bugs fixed (2026-04-02)
+**Tag:** v1.2.1-PROJ-2 | **Production URL:** https://test-dd4915a3i-andreas-kirmses-projects.vercel.app | **Status:** Deployed
+
+**Fixes shipped:** BUG-3 (updated_at migration), BUG-5 (dirty check), BUG-6 (auth-optional GET), BUG-7 (AlertDialog e.preventDefault)
 
 **What was built:**
 - `IdeaCard` now accepts `currentUserId` and `onRefresh` props
