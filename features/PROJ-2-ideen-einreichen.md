@@ -1,6 +1,6 @@
                 # PROJ-2: Ideen einreichen
 
-## Status: Deployed
+## Status: In Review
 **Created:** 2026-04-01
 **Last Updated:** 2026-04-02
 
@@ -353,3 +353,20 @@ Keine neuen Pakete notwendig — alles bereits im Projekt vorhanden.
 - Added "Bestehende Ideen ansehen" button to `SubmitIdeaForm` below the submit button
 - Button opens `/board` in a **new tab** (`target="_blank"`) so the user can browse existing ideas without losing their in-progress form input
 - File changed: `src/components/ideas/submit-idea-form.tsx`
+
+### Edit & Delete UI added (fix — was planned but missing from frontend sprint)
+**Commit:** 3e1dfac | **Date:** 2026-04-02 | **Status:** In Review (QA pending)
+
+**What was built:**
+- `IdeaCard` now accepts `currentUserId` and `onRefresh` props
+- When `currentUserId === user_id`, two icon buttons appear in the card footer: Pencil (edit) and Trash (delete)
+- **Edit flow:** Opens a `Dialog` with pre-filled title + description fields (react-hook-form + `updateIdeaSchema`), character counters, field-level validation errors, calls `PATCH /api/ideas/[id]`, refreshes list on success
+- **Delete flow:** Opens an `AlertDialog` with confirmation text and idea title, calls `DELETE /api/ideas/[id]`, refreshes list on success; DB cascade deletes associated votes
+- `IdeaList` fetches the current user ID via Supabase browser client on mount and passes it with `onRefresh={fetchIdeas}` to each `IdeaCard`
+- Anon users and non-owners see no buttons (no UI rendered, backend also enforces ownership)
+
+**Files changed:**
+- `src/components/ideas/idea-card.tsx` — owner action buttons + dialogs
+- `src/components/ideas/idea-list.tsx` — current user ID fetch + prop passthrough
+
+**Backend:** No changes needed — `PATCH` and `DELETE /api/ideas/[id]` were already implemented with ownership checks and RLS.
