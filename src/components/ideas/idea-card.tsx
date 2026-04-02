@@ -294,7 +294,7 @@ export function IdeaCard({
           <AlertDialogFooter>
             <AlertDialogCancel disabled={isDeleting}>Abbrechen</AlertDialogCancel>
             <AlertDialogAction
-              onClick={onDeleteConfirm}
+              onClick={(e) => { e.preventDefault(); onDeleteConfirm() }}
               disabled={isDeleting}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
