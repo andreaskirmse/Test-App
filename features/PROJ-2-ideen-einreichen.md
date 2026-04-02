@@ -374,38 +374,25 @@ Keine neuen Pakete notwendig — alles bereits im Projekt vorhanden.
 - **Status:** Deferred -- no idea detail page exists. Waiting for PROJ-3 expansion or dedicated detail page.
 - **Priority:** Fix in next sprint
 
-##### BUG-3: Missing `updated_at` column on ideas table (CARRIED OVER)
+##### ~~BUG-3: Missing `updated_at` column on ideas table~~ FIXED
 - **Severity:** Low
-- **Status:** Still open. Now more relevant since Edit UI is live -- edited ideas have no visible "last modified" indicator.
-- **Priority:** Fix in next sprint
+- **Status:** FIXED in commit 914975f (2026-04-02)
+- **Fix:** Migration `20260402_proj2_add_updated_at_to_ideas.sql` adds `updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()`, backfills existing rows with `created_at`, and installs a `BEFORE UPDATE` trigger (`ideas_set_updated_at`) that auto-sets the value on every PATCH. Applied to Supabase production.
 
 ##### BUG-4: German umlauts inconsistency in user-facing text (CARRIED OVER)
 - **Severity:** Low
 - **Status:** Still open. Submit form uses ASCII approximations while Zod messages use proper umlauts. The edit dialog text ("Idee bearbeiten", "Speichern", "Abbrechen") uses proper German -- this deepens the inconsistency with the submit form.
 - **Priority:** Nice to have
 
-##### BUG-5: Edit submits unchanged values to API (NEW)
+##### ~~BUG-5: Edit submits unchanged values to API~~ FIXED
 - **Severity:** Low
-- **Steps to Reproduce:**
-  1. Go to /board (logged in, with own ideas)
-  2. Click the edit (pencil) icon on one of your ideas
-  3. Do not change anything in the edit dialog
-  4. Click "Speichern"
-  5. Expected: Either a "no changes detected" message, or the dialog simply closes without API call
-  6. Actual: PATCH request is sent with the original unchanged values, generating unnecessary DB write
-- **Impact:** Minor -- functionally harmless, but wastes a network request and DB operation. No data corruption risk.
-- **Priority:** Nice to have
+- **Status:** FIXED in commit 914975f (2026-04-02)
+- **Fix:** Dirty check added at the start of `onEditSubmit`: if `values.title === title && values.description === description`, the dialog closes immediately without a PATCH request.
 
-##### BUG-6: GET /api/ideas/[id] requires auth but GET /api/ideas does not (NEW)
+##### ~~BUG-6: GET /api/ideas/[id] requires auth but GET /api/ideas does not~~ FIXED
 - **Severity:** Medium
-- **Steps to Reproduce:**
-  1. Open browser without logging in
-  2. Navigate to /board -- ideas load successfully (GET /api/ideas works unauthenticated)
-  3. Try to fetch a single idea: `curl /api/ideas/{some-uuid}` without auth
-  4. Expected: Returns the idea (if approved), same as the list endpoint
-  5. Actual: Returns 401 "Nicht authentifiziert"
-- **Impact:** Authorization inconsistency. If the board is public (PROJ-4 made it so), individual idea fetching should also work for unauthenticated users (at least for approved ideas). This blocks future features like shareable idea links. Currently no UI depends on this endpoint for anonymous users, so it is not user-facing.
-- **Priority:** Fix in next sprint (before adding idea detail page or sharing features)
+- **Status:** FIXED in commit 914975f (2026-04-02)
+- **Fix:** Removed mandatory auth check from `GET /api/ideas/[id]`. Auth is now optional — RLS handles visibility (approved ideas visible to anon, own pending ideas visible to logged-in owner). Consistent with `GET /api/ideas` list endpoint.
 
 ##### ~~BUG-7: AlertDialog delete action does not prevent default event propagation~~ FIXED
 - **Severity:** Medium
@@ -416,12 +403,11 @@ Keine neuen Pakete notwendig — alles bereits im Projekt vorhanden.
 - **Acceptance Criteria (original):** 6/7 passed, 1/7 partial pass (AC-4 deferred, no idea detail page)
 - **Edit/Delete feature:** 10/10 functional tests passed
 - **Previous bugs resolved:** BUG-2 (whitespace validation) FIXED
-- **Bugs found:** 6 total across both rounds (0 critical, 0 high, 2 medium, 4 low)
-  - 2 medium: BUG-6 (auth inconsistency), BUG-7 (delete error invisible)
-  - 4 low: BUG-1 (no idea link), BUG-3 (no updated_at), BUG-4 (umlaut inconsistency), BUG-5 (unchanged edit submit)
-- **Security:** PASS -- authentication, authorization, RLS, rate limiting, input validation (with trim), and security headers all properly implemented. Defense-in-depth pattern used correctly on all mutation routes.
-- **Production Ready:** YES
-- **Recommendation:** BUG-7 FIXED. BUG-6 to be addressed in next sprint. All other open bugs are low severity and deferred.
+- **Bugs found:** 6 total across both rounds — 5 of 6 FIXED
+  - FIXED: BUG-2 (whitespace), BUG-3 (updated_at), BUG-5 (unchanged edit), BUG-6 (auth inconsistency), BUG-7 (delete error dialog)
+  - Open: BUG-1 (no idea link, deferred until detail page), BUG-4 (false positive — umlauts already correct in code)
+- **Security:** PASS
+- **Production Ready:** YES — no open blocking bugs.
 
 ## Deployment
 
@@ -439,8 +425,6 @@ Keine neuen Pakete notwendig — alles bereits im Projekt vorhanden.
 
 ### Known deferred issues
 - BUG-1: No link to individual idea in success state (pending PROJ-3 idea detail pages)
-- BUG-3: No `updated_at` column (pending next sprint)
-- BUG-4: Some user-facing text uses ASCII approximations for umlauts (cosmetic)
 
 ## Post-Deploy Changes (2026-04-02)
 
