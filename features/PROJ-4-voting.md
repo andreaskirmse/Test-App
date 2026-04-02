@@ -345,6 +345,7 @@ Assessment based on code/Tailwind class analysis:
 ## Deployment
 
 - **Deployed:** 2026-04-02
+- **Production URL:** https://test-dd4915a3i-andreas-kirmses-projects.vercel.app
 - **Commit:** a453880
 - **Method:** Push to main → Vercel auto-deploy
 - **Open Bugs at Deploy:** BUG-2 (Medium, detail API missing vote data — no UI uses it yet), BUG-4 (Low, no rate limiting), BUG-5 (Low, SECURITY DEFINER note), BUG-6 (Medium, detail API requires auth — no detail page UI yet)
