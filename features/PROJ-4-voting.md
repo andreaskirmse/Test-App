@@ -41,7 +41,60 @@
 <!-- Sections below are added by subsequent skills -->
 
 ## Tech Design (Solution Architect)
-_To be added by /architecture_
+
+### Component Structure
+
+```
+IdeaCard (existing — extended)
++-- VoteButton (NEW — replaces static Badge)
+    +-- ThumbsUp icon (lucide-react)
+    +-- Vote count number
+    +-- Loading spinner (during API call)
+    +-- Tooltip: "Anmelden zum Voten" (logged-out users)
+```
+
+### Data Model
+
+**New table: `votes`**
+- `id` — unique identifier
+- `user_id` — who voted (links to auth.users)
+- `idea_id` — which idea (links to ideas)
+- `created_at` — when the vote was cast
+- Constraint: one vote per user per idea (database-enforced unique)
+
+**Extended ideas query returns:**
+- `vote_count` — total votes (already in IdeaCard props, currently static)
+- `user_has_voted` — boolean, whether the requesting user has voted (new)
+
+### API Design
+
+**New endpoint: `/api/ideas/[id]/vote`**
+- `POST` → cast a vote (idempotent)
+- `DELETE` → remove a vote
+- Protected by Supabase RLS: users can only insert/delete their own votes
+
+### Tech Decisions
+
+| Decision | Choice | Why |
+|---|---|---|
+| Optimistic UI | React useState | Instant feedback — no waiting for server |
+| Vote storage | Supabase votes table | Persistent, enforces one-vote-per-user at DB level |
+| Vote counting | DB aggregation | Always accurate, computed server-side |
+| Auth check | Supabase session | Reuses existing PROJ-1 auth |
+| Error handling | Revert + Toast (sonner) | User sees what happened, can retry |
+
+### Existing Code Changes
+
+- `IdeaCard` — static vote Badge → interactive VoteButton; props extended with `userHasVoted`
+- `/api/ideas` route — query extended to include `user_has_voted` when user is logged in
+- `IdeaList` — passes new props down to IdeaCard
+
+### Dependencies
+
+No new packages — all already installed:
+- `lucide-react` (ThumbsUp icon)
+- `sonner` (error toasts)
+- Supabase client (already configured)
 
 ## QA Test Results
 _To be added by /qa_
