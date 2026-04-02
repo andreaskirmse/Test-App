@@ -20,6 +20,7 @@ interface Idea {
   created_at: string
   author_name: string
   vote_count: number
+  user_has_voted: boolean
 }
 
 interface IdeasResponse {

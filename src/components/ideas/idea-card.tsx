@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { VoteButton } from "@/components/ideas/vote-button"
 
 interface IdeaCardProps {
   id: string
@@ -11,6 +12,7 @@ interface IdeaCardProps {
   created_at: string
   author_name: string
   vote_count: number
+  user_has_voted: boolean
 }
 
 function formatRelativeDate(dateString: string): string {
@@ -35,21 +37,25 @@ function truncateText(text: string, maxLength: number): string {
 }
 
 export function IdeaCard({
+  id,
   title,
   description,
   status,
   created_at,
   author_name,
   vote_count,
+  user_has_voted,
 }: IdeaCardProps) {
   return (
     <Card className="transition-colors hover:border-primary/30">
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between gap-3">
           <CardTitle className="text-lg leading-snug">{title}</CardTitle>
-          <Badge variant="secondary" className="shrink-0" aria-label={`${vote_count} Votes`}>
-            {vote_count} {vote_count === 1 ? "Vote" : "Votes"}
-          </Badge>
+          <VoteButton
+            ideaId={id}
+            initialVoteCount={vote_count}
+            initialHasVoted={user_has_voted}
+          />
         </div>
       </CardHeader>
       <CardContent>
