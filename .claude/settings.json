@@ -16,7 +16,9 @@
       "Bash(kill:*)",
       "Bash(npx shadcn@latest add:*)",
       "Bash(ls:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(mkdir -p \"c:\\\\Users\\\\Andi\\\\Documents\\\\00 KI\\\\2 projects\\\\PRIVATE PROJEKTE\\\\Test-App\\\\supabase\\\\migrations\")",
+      "Bash(mkdir -p \"c:\\\\Users\\\\Andi\\\\Documents\\\\00 KI\\\\2 projects\\\\PRIVATE PROJEKTE\\\\Test-App\\\\src\\\\app\\\\api\\\\ideas\\\\[id]\")"
     ]
   }
 }

@@ -247,6 +247,9 @@ export function SubmitIdeaForm() {
               {isLoading && <Loader2 className="animate-spin" />}
               Idee einreichen
             </Button>
+            <Button asChild variant="outline" className="w-full">
+              <Link href="/board" target="_blank" rel="noopener noreferrer">Bestehende Ideen ansehen</Link>
+            </Button>
           </form>
         </Form>
       </CardContent>

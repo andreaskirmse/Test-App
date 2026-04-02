@@ -346,3 +346,10 @@ Keine neuen Pakete notwendig — alles bereits im Projekt vorhanden.
 - BUG-1: No link to individual idea in success state (pending PROJ-3 idea detail pages)
 - BUG-3: No `updated_at` column (pending next sprint)
 - BUG-4: Some user-facing text uses ASCII approximations for umlauts (cosmetic)
+
+## Post-Deploy Changes (2026-04-02)
+
+### Link to Ideenboard added
+- Added "Bestehende Ideen ansehen" button to `SubmitIdeaForm` below the submit button
+- Button opens `/board` in a **new tab** (`target="_blank"`) so the user can browse existing ideas without losing their in-progress form input
+- File changed: `src/components/ideas/submit-idea-form.tsx`

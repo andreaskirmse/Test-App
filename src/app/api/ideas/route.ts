@@ -5,11 +5,17 @@ import { createIdeaSchema } from "@/lib/validations/ideas"
 const RATE_LIMIT_MAX = 5
 const RATE_LIMIT_WINDOW_MINUTES = 60
 
+const PAGE_SIZE = 10
+
 /**
  * GET /api/ideas
  * Returns ideas visible to the current user:
  * - All approved ideas
  * - The user's own pending ideas
+ *
+ * Query params:
+ *   ?sort=votes|date  — sorting mode (votes falls back to date until PROJ-4)
+ *   ?page=1           — 1-based page number, 10 items per page
  */
 export async function GET(request: NextRequest) {
   const supabase = await createServerSupabaseClient()
@@ -27,20 +33,26 @@ export async function GET(request: NextRequest) {
     )
   }
 
-  // Parse optional query params
+  // Parse query params
   const { searchParams } = new URL(request.url)
-  const limitParam = searchParams.get("limit")
-  const offsetParam = searchParams.get("offset")
-  const limit = Math.min(Math.max(parseInt(limitParam || "20", 10), 1), 100)
-  const offset = Math.max(parseInt(offsetParam || "0", 10), 0)
+  const sortParam = searchParams.get("sort")
+  const pageParam = searchParams.get("page")
 
+  // Validate sort — only "votes" and "date" are accepted; default to "date"
+  const sort = sortParam === "votes" || sortParam === "date" ? sortParam : "date"
+
+  // Validate page — must be >= 1
+  const page = Math.max(parseInt(pageParam || "1", 10) || 1, 1)
+  const offset = (page - 1) * PAGE_SIZE
+
+  // Sort by date descending (votes sorting falls back to date until PROJ-4)
+  // Join against profiles to get author email for display name
   // RLS handles visibility: approved ideas + own ideas (any status)
-  // We use a single query since RLS policy already enforces the correct filter
   const { data: ideas, error, count } = await supabase
     .from("ideas")
-    .select("*", { count: "exact" })
+    .select("id, user_id, title, description, status, created_at, profiles(email)", { count: "exact" })
     .order("created_at", { ascending: false })
-    .range(offset, offset + limit - 1)
+    .range(offset, offset + PAGE_SIZE - 1)
 
   if (error) {
     return NextResponse.json(
@@ -49,11 +61,38 @@ export async function GET(request: NextRequest) {
     )
   }
 
+  // Map ideas to include author_name, hiding raw email details
+  const mappedIdeas = (ideas ?? []).map((idea) => {
+    // profiles comes back as an object (single FK relation via user_id) or null
+    const profileData = idea.profiles
+    const profile = Array.isArray(profileData) ? profileData[0] as { email: string } | undefined : profileData as { email: string } | null
+    let authorName = "Anonym"
+    if (profile?.email) {
+      // Use the part before @ as a display name
+      authorName = profile.email.split("@")[0]
+    }
+
+    return {
+      id: idea.id,
+      user_id: idea.user_id,
+      title: idea.title,
+      description: idea.description,
+      status: idea.status,
+      created_at: idea.created_at,
+      author_name: authorName,
+      vote_count: 0, // Placeholder until PROJ-4 adds the votes table
+    }
+  })
+
+  const totalPages = Math.ceil((count ?? 0) / PAGE_SIZE)
+
   return NextResponse.json({
-    ideas,
+    ideas: mappedIdeas,
     total: count,
-    limit,
-    offset,
+    page,
+    page_size: PAGE_SIZE,
+    total_pages: totalPages,
+    sort,
   })
 }
 
