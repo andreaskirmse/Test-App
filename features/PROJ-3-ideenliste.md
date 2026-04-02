@@ -1,6 +1,6 @@
 # PROJ-3: Ideenliste
 
-## Status: In Review
+## Status: Deployed
 **Created:** 2026-04-01
 **Last Updated:** 2026-04-02
 
@@ -412,4 +412,8 @@ Keine neuen Pakete notwendig — alles bereits im Projekt vorhanden.
 - **Recommendation:** The 3 blocking bugs from Round 1 are fixed. The remaining 2 medium-severity bugs (BUG-3 clickable cards, BUG-8 GET rate limiting) are acceptable for MVP deployment. Fix them in the next sprint along with the 3 low-severity items.
 
 ## Deployment
-_To be added by /deploy_
+
+- **Deployed:** 2026-04-02
+- **Commit:** feat(PROJ-3): Implement Ideenliste feature
+- **Database Migration:** `proj3_ideas_status_created_at_index` applied to production Supabase
+- **Git Tag:** v1.3.0-PROJ-3
