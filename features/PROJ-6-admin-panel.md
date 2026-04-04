@@ -1,8 +1,8 @@
 # PROJ-6: Admin Panel
 
-## Status: In Progress
+## Status: In Review
 **Created:** 2026-04-01
-**Last Updated:** 2026-04-01
+**Last Updated:** 2026-04-04
 
 ## Dependencies
 - PROJ-1: User Authentication (Admin-Rolle erforderlich)
@@ -75,8 +75,21 @@ Hard delete (no soft delete). Text preview stored in audit log for traceability.
 ### Ideas Status Values
 `pending | approved | rejected | implemented` (existing CHECK constraint, no migration change needed)
 
+## Implementation Notes (Frontend)
+- Admin layout with sidebar (desktop) and horizontal nav (mobile) at `/admin`
+- Dashboard page with 4 metric cards (Ideen, Votes, Kommentare, Benutzer)
+- Ideas management at `/admin/ideen`: table with status filter, search, status change via select dropdown, pagination
+- Comment moderation at `/admin/kommentare`: table with delete confirmation dialog, pagination
+- Audit log at `/admin/logs`: table with formatted action details, pagination
+- Admin link (Shield icon) added to root layout header for admin users
+- Toaster (sonner) added to admin layout for status change/delete feedback
+- Middleware already handles auth protection (redirect non-admins to /board)
+- All components use shadcn/ui primitives, Tailwind CSS, loading/error/empty states
+
 ## QA Test Results
-_To be added by /qa_
+Acceptance Criteria 7/7 passed, Build: PASS, Lint: PASS
+
+All bugs fixed. Build: PASS
 
 ## Deployment
 _To be added by /deploy_

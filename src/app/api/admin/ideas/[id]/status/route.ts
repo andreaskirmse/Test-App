@@ -80,13 +80,17 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
   }
 
   // Write audit log entry
-  await supabase.from("admin_audit_log").insert({
+  const { error: auditError } = await supabase.from("admin_audit_log").insert({
     admin_id: auth.user.id,
     action: "status_changed",
     target_type: "idea",
     target_id: id,
     details: { old_status: oldStatus, new_status: newStatus },
   })
+
+  if (auditError) {
+    console.error("Audit log insert failed:", auditError)
+  }
 
   return NextResponse.json({ idea: updatedIdea })
 }

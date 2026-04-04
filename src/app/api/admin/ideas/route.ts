@@ -44,7 +44,8 @@ export async function GET(request: NextRequest) {
     query = query.eq("status", validStatus)
   }
   if (searchParam) {
-    query = query.or(`title.ilike.%${searchParam}%,description.ilike.%${searchParam}%`)
+    const escaped = searchParam.replace(/[%_\\]/g, "\\$&")
+    query = query.or(`title.ilike.%${escaped}%,description.ilike.%${escaped}%`)
   }
 
   const offset = (page - 1) * PAGE_SIZE

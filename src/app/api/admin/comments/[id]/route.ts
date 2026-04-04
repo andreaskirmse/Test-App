@@ -51,7 +51,7 @@ export async function DELETE(request: NextRequest, context: RouteContext) {
   }
 
   // Write audit log entry
-  await supabase.from("admin_audit_log").insert({
+  const { error: auditError } = await supabase.from("admin_audit_log").insert({
     admin_id: auth.user.id,
     action: "comment_deleted",
     target_type: "comment",
@@ -62,6 +62,10 @@ export async function DELETE(request: NextRequest, context: RouteContext) {
       text_preview: comment.text.slice(0, 100),
     },
   })
+
+  if (auditError) {
+    console.error("Audit log insert failed:", auditError)
+  }
 
   return NextResponse.json({ success: true })
 }
