@@ -1,6 +1,6 @@
 # PROJ-5: Comments
 
-## Status: In Review
+## Status: Deployed
 **Created:** 2026-04-01
 **Last Updated:** 2026-04-04
 
@@ -140,4 +140,7 @@ Acceptance Criteria 6/7 passed, Build: PASS
 **Production-ready: YES** (no Critical or High bugs)
 
 ## Deployment
-_To be added by /deploy_
+
+- **Deployed:** 2026-04-04
+- **Commit:** ae71d3b
+- **Tag:** v1.5.0-PROJ-5
