@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { AdminCommentsList } from "@/components/admin/admin-comments-list"
 
 export const metadata = {
@@ -14,7 +15,9 @@ export default function AdminCommentsPage() {
           Alle Kommentare einsehen und bei Bedarf löschen.
         </p>
       </div>
-      <AdminCommentsList />
+      <Suspense>
+        <AdminCommentsList />
+      </Suspense>
     </div>
   )
 }

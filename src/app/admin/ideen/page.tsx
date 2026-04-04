@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { AdminIdeasList } from "@/components/admin/admin-ideas-list"
 
 export const metadata = {
@@ -14,7 +15,9 @@ export default function AdminIdeasPage() {
           Alle Ideen einsehen, filtern und den Status ändern.
         </p>
       </div>
-      <AdminIdeasList />
+      <Suspense>
+        <AdminIdeasList />
+      </Suspense>
     </div>
   )
 }

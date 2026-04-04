@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { AdminAuditLog } from "@/components/admin/admin-audit-log"
 
 export const metadata = {
@@ -14,7 +15,9 @@ export default function AdminLogsPage() {
           Protokoll aller Admin-Aktionen für Nachverfolgbarkeit.
         </p>
       </div>
-      <AdminAuditLog />
+      <Suspense>
+        <AdminAuditLog />
+      </Suspense>
     </div>
   )
 }
