@@ -43,7 +43,75 @@
 <!-- Sections below are added by subsequent skills -->
 
 ## Tech Design (Solution Architect)
-_To be added by /architecture_
+
+### What Gets Built
+
+Two things are needed: a new **Idea Detail Page** (where comments live) and the **Comments feature** itself. Additionally, BUG-4 from PROJ-3 is resolved here by adding a "Mehr lesen" link to the idea card that navigates to this new detail page.
+
+### Component Structure
+
+```
+/ideas/[id]  (New Page)
++-- Back Link  (→ /ideas)
++-- Idea Detail Card
+|   +-- Full title + description (no truncation)
+|   +-- Author name, created date, category badge
+|   +-- Vote Button  (reuse existing vote-button.tsx)
++-- Comments Section
+    +-- Comment Count Header  (e.g. "3 Kommentare")
+    +-- Comment List
+    |   +-- Comment Item  (avatar, author name, date, text)
+    |   +-- Comment Skeleton  (loading state, reuse skeleton.tsx)
+    |   +-- Empty State  ("Noch keine Kommentare")
+    |   +-- "Mehr laden" Button  (if more than 20 comments)
+    +-- Comment Form  (logged-in users only)
+    |   +-- Textarea  (reuse textarea.tsx, max 500 chars)
+    |   +-- Character Counter  ("123 / 500")
+    |   +-- Submit Button
+    +-- Login Prompt  (logged-out users: "Einloggen um zu kommentieren")
+
+src/components/ideas/idea-card.tsx  (updated)
+    +-- "Mehr lesen →" link added below truncated description  (BUG-4 fix)
+```
+
+### Data Model
+
+**New database table: `comments`**
+
+Each comment stores:
+- Unique ID
+- Which idea it belongs to (link to ideas table — auto-deleted when idea is deleted)
+- Who wrote it (link to the user account)
+- The comment text (up to 500 characters)
+- When it was created
+
+**Access rules (RLS):**
+- Anyone (including logged-out visitors) can read comments
+- Only logged-in users can post a comment, and only as themselves
+- No editing or deleting by users (admin moderation handled in PROJ-6)
+
+### API Endpoints
+
+Two new endpoints are added under the existing `/api/ideas/[id]/` route:
+
+| Endpoint | Who can use it | What it does |
+|---|---|---|
+| `GET /api/ideas/[id]/comments` | Everyone | Returns comments for an idea, newest first, 20 per page |
+| `POST /api/ideas/[id]/comments` | Logged-in users only | Creates a new comment |
+
+The existing `GET /api/ideas/[id]` endpoint (already built) is reused to load the idea detail.
+
+### Tech Decisions
+
+- **No new packages needed.** All required UI components already exist: `Textarea`, `Card`, `Button`, `Avatar`, `Skeleton`, `Pagination`.
+- **Pagination strategy: "Mehr laden" button (20 per page).** Ideas per topic are typically few — a simple load-more pattern is less complex than infinite scroll and consistent with the existing pagination style.
+- **Initial page load is server-rendered** (first 20 comments fetched on the server) for fast display and SEO. Additional pages load client-side when the user clicks "Mehr laden".
+- **Avatar initials** (first letter of author name/email) are shown — no image upload needed for comments.
+- **Spam filter:** empty comments are blocked by validation; no external spam service needed at this stage (spec says "simple").
+
+### Dependencies
+
+No new packages required — all existing shadcn/ui components cover the UI needs.
 
 ## QA Test Results
 _To be added by /qa_
