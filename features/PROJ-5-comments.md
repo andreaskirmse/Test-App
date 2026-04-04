@@ -142,5 +142,6 @@ Acceptance Criteria 6/7 passed, Build: PASS
 ## Deployment
 
 - **Deployed:** 2026-04-04
+- **Production URL:** https://test-6l41wr9j2-andreas-kirmses-projects.vercel.app/
 - **Commit:** ae71d3b
 - **Tag:** v1.5.0-PROJ-5
