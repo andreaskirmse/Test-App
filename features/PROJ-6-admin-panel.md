@@ -1,6 +1,6 @@
 # PROJ-6: Admin Panel
 
-## Status: Planned
+## Status: In Progress
 **Created:** 2026-04-01
 **Last Updated:** 2026-04-01
 
@@ -43,7 +43,37 @@
 <!-- Sections below are added by subsequent skills -->
 
 ## Tech Design (Solution Architect)
-_To be added by /architecture_
+
+### Route Structure
+- `/admin` — Dashboard (Metriken)
+- `/admin/ideen` — Ideenverwaltung (Filter, Status-Änderung)
+- `/admin/kommentare` — Kommentar-Moderation (Löschen)
+- `/admin/logs` — Audit-Log
+
+### New Database Objects
+- `admin_audit_log` table: logs every admin action (status_changed, comment_deleted) with admin_id, target, and details (JSONB)
+- `is_admin()` Postgres helper function used in RLS policies
+
+### New API Endpoints
+| Endpoint | Method | Purpose |
+|---|---|---|
+| `/api/admin/stats` | GET | Dashboard metrics |
+| `/api/admin/ideas` | GET | All ideas (all statuses), filterable + paginated |
+| `/api/admin/ideas/[id]/status` | PATCH | Change idea status + write audit log |
+| `/api/admin/comments` | GET | All comments, paginated |
+| `/api/admin/comments/[id]` | DELETE | Hard delete + write audit log |
+| `/api/admin/audit-log` | GET | Paginated audit trail |
+
+### Security (3 layers)
+1. **Next.js Middleware** — checks `is_admin` on every `/admin/*` request; redirects non-admins to `/board`
+2. **API helper** — `src/lib/admin-auth.ts` checks `is_admin` in every admin API route
+3. **Supabase RLS** — `is_admin()` function used in all admin policies; direct DB access blocked
+
+### Comment Deletion
+Hard delete (no soft delete). Text preview stored in audit log for traceability.
+
+### Ideas Status Values
+`pending | approved | rejected | implemented` (existing CHECK constraint, no migration change needed)
 
 ## QA Test Results
 _To be added by /qa_

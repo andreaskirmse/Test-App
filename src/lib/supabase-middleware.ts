@@ -45,6 +45,22 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
+  // Admin routes: redirect to board if authenticated but not an admin
+  const isAdminPath = request.nextUrl.pathname.startsWith("/admin")
+  if (isAdminPath && user) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("is_admin")
+      .eq("id", user.id)
+      .single()
+
+    if (!profile?.is_admin) {
+      const url = request.nextUrl.clone()
+      url.pathname = "/board"
+      return NextResponse.redirect(url)
+    }
+  }
+
   // Auth pages: redirect to board if already authenticated
   const authPaths = ["/login", "/register", "/passwort-vergessen"]
   const isAuthPath = authPaths.some((path) =>
