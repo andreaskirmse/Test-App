@@ -36,6 +36,7 @@ import {
 import { VoteButton } from "@/components/ideas/vote-button"
 import { updateIdeaSchema, type UpdateIdeaFormValues } from "@/lib/validations/ideas"
 import { Pencil, Trash2 } from "lucide-react"
+import Link from "next/link"
 
 interface IdeaCardProps {
   id: string
@@ -176,6 +177,14 @@ export function IdeaCard({
           <p className="text-sm text-muted-foreground leading-relaxed">
             {truncateText(description, 150)}
           </p>
+          {description.length > 150 && (
+            <Link
+              href={`/ideas/${id}`}
+              className="mt-1 inline-block text-sm font-medium text-primary hover:underline"
+            >
+              Mehr lesen &rarr;
+            </Link>
+          )}
           <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
             <span>{author_name}</span>
             <div className="flex items-center gap-2">

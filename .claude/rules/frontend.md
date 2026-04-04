@@ -28,6 +28,33 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 - Keep components small and focused
 - Use TypeScript interfaces for all props
 
+## Server vs. Client Components (MANDATORY)
+
+Pages are Server Components by default in Next.js App Router. Only add `"use client"` when strictly necessary.
+
+**NEVER use `"use client"` on a page just because:**
+- You need to fetch data → use `async` server component and fetch directly
+- You need URL params → use the `params` prop (server) not `useParams()` (client hook)
+- It's "easier" or a familiar pattern from older Next.js
+
+**`"use client"` is ONLY justified when the component uses:**
+- React hooks (`useState`, `useEffect`, `useReducer`, `useCallback`)
+- Browser APIs (`window`, `localStorage`, `document`)
+- Event handlers that require interactivity
+
+**Correct pattern: server shell + client islands**
+```tsx
+// page.tsx — Server Component (no "use client")
+export default async function IdeaDetailPage({ params }: { params: { id: string } }) {
+  const data = await fetchIdea(params.id) // fetch on server
+  return <IdeaDetailClient idea={data} /> // pass as props
+}
+
+// idea-detail-client.tsx — Client Component (interactive parts only)
+"use client"
+export function IdeaDetailClient({ idea }: { idea: Idea }) { ... }
+```
+
 ## Auth Best Practices (Supabase)
 - Use `window.location.href` for post-login redirect (not `router.push`)
 - Always verify `data.session` exists before redirecting

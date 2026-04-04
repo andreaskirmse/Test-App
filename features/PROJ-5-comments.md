@@ -1,8 +1,8 @@
 # PROJ-5: Comments
 
-## Status: Planned
+## Status: In Review
 **Created:** 2026-04-01
-**Last Updated:** 2026-04-01
+**Last Updated:** 2026-04-04
 
 ## Dependencies
 - PROJ-1: User Authentication (Kommentare erfordern Login)
@@ -113,8 +113,31 @@ The existing `GET /api/ideas/[id]` endpoint (already built) is reused to load th
 
 No new packages required — all existing shadcn/ui components cover the UI needs.
 
+## Backend Implementation Notes (2026-04-04)
+
+- **Migration:** `supabase/migrations/20260404_proj5_create_comments_table.sql` -- creates `comments` table with RLS (SELECT open, INSERT authenticated-only), indexes on `idea_id` and `created_at`, ON DELETE CASCADE for both `ideas` and `auth.users`.
+- **Zod schema:** `src/lib/validations/comments.ts` -- validates `text` field (1-500 chars, trimmed).
+- **GET /api/ideas/[id]/comments:** Paginated (20/page), ordered `created_at DESC`. Returns `total_count`, `page`, `total_pages`. Author names resolved via `profiles` table (same pattern as `get_ideas_paginated`). No auth required.
+- **POST /api/ideas/[id]/comments:** Auth required (401 if not logged in). Zod validation on body. Rate limit: 10 comments/user/hour (429 on exceed). Returns created comment with `author_name`.
+- **Design decision:** Used two-query approach (comments + profiles) instead of embedded join, since `comments.user_id` FK points to `auth.users`, not `profiles`. Consistent with existing RPC pattern.
+
 ## QA Test Results
-_To be added by /qa_
+
+Acceptance Criteria 6/7 passed, Build: PASS
+
+**Open Bugs:**
+- ~~BUG-8 (Medium): Fixed — page.tsx converted to async Server Component; data fetched server-side via createServerSupabaseClient()~~
+- ~~BUG-9 (Low): Fixed — "Zurück zum Board" umlaut corrected~~
+- ~~BUG-10 (Low): Fixed — counter now uses raw `text.length`, consistent with `maxLength` on the textarea~~
+- BUG-11 (Low): GET comments API returns `user_id` (Supabase auth UUID) in public response -- minor information disclosure, consistent with existing ideas API pattern -- priority: low
+- ~~BUG-12 (Low): Fixed — `page` is now clamped to `totalPages` before use, response always returns a valid page number~~
+
+**AC that failed:**
+- "Grundlegende Moderation: Keine leeren Kommentare, Spam-Filter (einfach)" -- empty comments are blocked by Zod validation (PASS), but no spam filter of any kind exists beyond empty-check (PARTIAL FAIL)
+
+**Security Audit:** No critical or high findings. UUID validation prevents SQL injection. React escapes all rendered text (no XSS). RLS correctly enforces read-all/insert-own-only. Auth is verified server-side before writes. Rate limiting (10/hour) is implemented. No secrets exposed. No `dangerouslySetInnerHTML` usage.
+
+**Production-ready: YES** (no Critical or High bugs)
 
 ## Deployment
 _To be added by /deploy_

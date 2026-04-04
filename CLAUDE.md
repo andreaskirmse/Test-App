@@ -31,10 +31,25 @@ docs/
 
 1. `/requirements` - Create feature spec from idea
 2. `/architecture` - Design tech architecture (PM-friendly, no code)
-3. `/frontend` - Build UI components (shadcn/ui first!)
-4. `/backend` - Build APIs, database, RLS policies
-5. `/qa` - Test against acceptance criteria + security audit
-6. `/deploy` - Deploy to Vercel + production-ready checks
+3. `/frontend` and `/backend` - order depends on the feature (see below)
+4. `/qa` - Test against acceptance criteria + security audit
+5. `/deploy` - Deploy to Vercel + production-ready checks
+
+### Frontend vs. Backend Order
+
+After `/architecture`, always reason about the better build order before suggesting the next step. Do NOT default to frontend-first without thinking.
+
+**Build frontend first when:**
+- The UI is complex and UX feedback early matters (multi-step forms, drag-and-drop, etc.)
+- The feature is mostly presentational with simple or no data needs
+- You want to validate layout and interaction before locking in the API shape
+
+**Build backend first when:**
+- The feature is data-driven and the UI is simple (e.g. a comment list + form)
+- The frontend needs real API endpoints to be meaningful — mocks add no value
+- The backend has significant complexity (RLS policies, joins, cascade deletes) that defines the data contract the frontend depends on
+
+**Always tell the user** which order you recommend and why, then ask for confirmation before proceeding.
 
 ## Feature Tracking
 
@@ -59,7 +74,9 @@ npm run start      # Production server
 
 ## Product Context
 
-
+- **App language: German** — all UI text, labels, error messages, and copy must be written in German
+- **Always use proper German umlauts:** ä, ö, ü, Ä, Ö, Ü, ß — NEVER use ASCII substitutes like ae, oe, ue, Ae, Oe, Ue, ss
+- Examples: "Zurück" not "Zurueck", "Öffnen" not "Oeffnen", "Straße" not "Strasse"
 
 ## Feature Overview
 

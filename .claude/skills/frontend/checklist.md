@@ -22,6 +22,12 @@ Before marking frontend as complete:
 - [ ] Error states implemented (user-friendly error messages)
 - [ ] Empty states implemented ("No data yet" messages)
 
+## Server vs. Client Rendering
+- [ ] Pages use Server Components unless `useState`/`useEffect`/browser APIs are required
+- [ ] `useParams()` NOT used in `page.tsx` — use `params` prop instead
+- [ ] No `"use client"` added for convenience — every usage is justified by an actual requirement
+- [ ] Interactive parts extracted into separate Client Components, not mixed into the page
+
 ## Quality
 - [ ] Responsive: Mobile (375px), Tablet (768px), Desktop (1440px)
 - [ ] Accessibility: Semantic HTML, ARIA labels, keyboard navigation
