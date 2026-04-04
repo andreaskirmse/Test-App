@@ -1,6 +1,6 @@
 # PROJ-6: Admin Panel
 
-## Status: In Review
+## Status: Deployed
 **Created:** 2026-04-01
 **Last Updated:** 2026-04-04
 
@@ -92,4 +92,7 @@ Acceptance Criteria 7/7 passed, Build: PASS, Lint: PASS
 All bugs fixed. Build: PASS
 
 ## Deployment
-_To be added by /deploy_
+- **Production URL:** https://test-6l41wr9j2-andreas-kirmses-projects.vercel.app/admin
+- **Deployed:** 2026-04-04
+- **Commit:** c5a8d54
+- **Git Tag:** v1.6.0-PROJ-6
