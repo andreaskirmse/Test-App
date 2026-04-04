@@ -92,7 +92,7 @@ Acceptance Criteria 7/7 passed, Build: PASS, Lint: PASS
 All bugs fixed. Build: PASS
 
 ## Deployment
-- **Production URL:** https://test-6l41wr9j2-andreas-kirmses-projects.vercel.app/admin
+- **Production URL:** https://test-1laxp0ur5-andreas-kirmses-projects.vercel.app/admin
 - **Deployed:** 2026-04-04
 - **Commit:** c5a8d54
 - **Git Tag:** v1.6.0-PROJ-6
