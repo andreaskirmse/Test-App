@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 import { Toaster } from "sonner"
 import { LayoutDashboard, Lightbulb, MessageSquare, ScrollText } from "lucide-react"
