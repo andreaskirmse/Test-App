@@ -32,7 +32,7 @@ export async function POST(request: NextRequest, context: RouteContext) {
   // Validate UUID format
   if (!UUID_REGEX.test(id)) {
     return NextResponse.json(
-      { error: "Ungueltige Idee-ID" },
+      { error: "Ungültige Idee-ID" },
       { status: 400 }
     )
   }
@@ -102,7 +102,7 @@ export async function DELETE(request: NextRequest, context: RouteContext) {
   // Validate UUID format
   if (!UUID_REGEX.test(id)) {
     return NextResponse.json(
-      { error: "Ungueltige Idee-ID" },
+      { error: "Ungültige Idee-ID" },
       { status: 400 }
     )
   }

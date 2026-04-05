@@ -21,7 +21,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
     /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
   if (!uuidRegex.test(id)) {
     return NextResponse.json(
-      { error: "Ungueltige Idee-ID" },
+      { error: "Ungültige Idee-ID" },
       { status: 400 }
     )
   }
@@ -69,7 +69,7 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
     /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
   if (!uuidRegex.test(id)) {
     return NextResponse.json(
-      { error: "Ungueltige Idee-ID" },
+      { error: "Ungültige Idee-ID" },
       { status: 400 }
     )
   }
@@ -80,7 +80,7 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
     body = await request.json()
   } catch {
     return NextResponse.json(
-      { error: "Ungueltiges JSON" },
+      { error: "Ungültiges JSON" },
       { status: 400 }
     )
   }
@@ -170,7 +170,7 @@ export async function DELETE(request: NextRequest, context: RouteContext) {
     /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
   if (!uuidRegex.test(id)) {
     return NextResponse.json(
-      { error: "Ungueltige Idee-ID" },
+      { error: "Ungültige Idee-ID" },
       { status: 400 }
     )
   }
@@ -203,7 +203,7 @@ export async function DELETE(request: NextRequest, context: RouteContext) {
 
   if (deleteError) {
     return NextResponse.json(
-      { error: "Fehler beim Loeschen der Idee" },
+      { error: "Fehler beim Löschen der Idee" },
       { status: 500 }
     )
   }

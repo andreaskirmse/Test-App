@@ -25,7 +25,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
   // Validate UUID format
   if (!UUID_REGEX.test(id)) {
     return NextResponse.json(
-      { error: "Ungueltige Idee-ID" },
+      { error: "Ungültige Idee-ID" },
       { status: 400 }
     )
   }
@@ -141,7 +141,7 @@ export async function POST(request: NextRequest, context: RouteContext) {
   // Validate UUID format
   if (!UUID_REGEX.test(id)) {
     return NextResponse.json(
-      { error: "Ungueltige Idee-ID" },
+      { error: "Ungültige Idee-ID" },
       { status: 400 }
     )
   }
@@ -152,7 +152,7 @@ export async function POST(request: NextRequest, context: RouteContext) {
     body = await request.json()
   } catch {
     return NextResponse.json(
-      { error: "Ungueltiges JSON" },
+      { error: "Ungültiges JSON" },
       { status: 400 }
     )
   }
@@ -195,7 +195,7 @@ export async function POST(request: NextRequest, context: RouteContext) {
 
   if (rateError) {
     return NextResponse.json(
-      { error: "Fehler bei der Rate-Limit-Pruefung" },
+      { error: "Fehler bei der Rate-Limit-Prüfung" },
       { status: 500 }
     )
   }

@@ -14,7 +14,7 @@ export default function ForgotPasswordPage() {
         <CardTitle className="text-2xl">Passwort vergessen</CardTitle>
         <CardDescription>
           Gib deine E-Mail-Adresse ein und wir senden dir einen Link zum
-          Zuruecksetzen deines Passworts
+          Zurücksetzen deines Passworts
         </CardDescription>
       </CardHeader>
       <CardContent>

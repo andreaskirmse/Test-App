@@ -67,7 +67,7 @@ export function ForgotPasswordForm() {
           <h3 className="text-lg font-medium">Reset-Link gesendet</h3>
           <p className="mt-2 text-sm text-muted-foreground">
             Falls ein Konto mit dieser E-Mail existiert, haben wir dir einen
-            Link zum Zuruecksetzen deines Passworts gesendet.
+            Link zum Zurücksetzen deines Passworts gesendet.
           </p>
         </div>
         <button
@@ -127,7 +127,7 @@ export function ForgotPasswordForm() {
             href="/login"
             className="font-medium text-primary underline-offset-4 hover:underline"
           >
-            Zurueck zum Login
+            Zurück zum Login
           </Link>
         </p>
       </form>

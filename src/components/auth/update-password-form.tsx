@@ -71,7 +71,7 @@ export function UpdatePasswordForm() {
         <div className="rounded-md bg-primary/10 p-4">
           <h3 className="text-lg font-medium">Passwort aktualisiert</h3>
           <p className="mt-2 text-sm text-muted-foreground">
-            Dein Passwort wurde erfolgreich geaendert. Du wirst gleich
+            Dein Passwort wurde erfolgreich geändert. Du wirst gleich
             weitergeleitet.
           </p>
         </div>
