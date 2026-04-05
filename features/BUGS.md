@@ -37,3 +37,5 @@
 | BUG-4 | PROJ-3 | Kein "Mehr lesen"-Link bei gekürzten Beschreibungen | PROJ-5 |
 | BUG-8 | PROJ-1 | `GITHUB_ACCESS_TOKEN` in `.env.local` ungenutzt | 2026-04-05 (manuell entfernt) |
 | BUG-4 | PROJ-2 | Umlaut-Inkonsistenzen in user-facing Texten | 2026-04-05 (globaler Umlaut-Fix) |
+| BUG-12 | PROJ-7 | Kein Home-Link im Header | fix(PROJ-7) 2026-04-05 |
+| BUG-13 | PROJ-7 | Generischer Seiten-Titel statt app-spezifischem | fix(PROJ-7) 2026-04-05 |

@@ -38,7 +38,8 @@
 _To be added by /architecture_
 
 ## QA Test Results
-_To be added by /qa_
+Acceptance Criteria 7/7 passed, Build: PASS
+Offene Bugs → siehe features/BUGS.md (BUG-12 und BUG-13 behoben)
 
 ## Deployment
 _To be added by /deploy_
