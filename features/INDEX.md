@@ -18,7 +18,7 @@
 | PROJ-4 | Voting | Deployed | [PROJ-4-voting.md](PROJ-4-voting.md) | 2026-04-01 |
 | PROJ-5 | Comments | Deployed | [PROJ-5-comments.md](PROJ-5-comments.md) | 2026-04-01 |
 | PROJ-6 | Admin Panel | Deployed | [PROJ-6-admin-panel.md](PROJ-6-admin-panel.md) | 2026-04-01 |
-| PROJ-7 | Landing Page | In Progress | [PROJ-7-landing-page.md](PROJ-7-landing-page.md) | 2026-04-05 |
+| PROJ-7 | Landing Page | Deployed | [PROJ-7-landing-page.md](PROJ-7-landing-page.md) | 2026-04-05 |
 
 <!-- Add features above this line -->
 
