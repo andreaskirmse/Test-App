@@ -136,9 +136,7 @@ Keine neuen Pakete notwendig — alles bereits im Projekt vorhanden.
 
 Acceptance Criteria 6/7 passed (AC-4 deferred — no detail page yet), Edit/Delete 10/10 passed, Build: PASS
 
-### Open Bugs
-- BUG-1 (Low): Success state has no link to the individual submitted idea — deferred until detail page (PROJ-5).
-- BUG-4 (Low): German umlauts inconsistency in submit form user-facing text — nice to have.
+Offene Bugs → siehe `features/BUGS.md`
 
 ## Deployment
 

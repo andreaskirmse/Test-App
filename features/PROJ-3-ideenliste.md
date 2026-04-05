@@ -179,12 +179,7 @@ Keine neuen Pakete notwendig — alles bereits im Projekt vorhanden.
 
 Acceptance Criteria 6/7 passed (AC-6 deferred — no detail view yet), Edge Cases 3/4 passed, Build: PASS
 
-### Open Bugs
-- BUG-3 (Medium): Idea cards have hover effect but no click handler — misleading affordance. Fix when detail view is built in PROJ-5.
-- BUG-4 (Low): No "Mehr lesen" link for truncated descriptions — fix in PROJ-5 (noted in PROJ-5 spec).
-- BUG-6 (Low): No upper-bound validation on `?page=` parameter — large values pass unclamped offset to RPC.
-- BUG-8 (Medium): No rate limiting on public `GET /api/ideas` endpoints — acceptable for MVP (Vercel/Supabase infra-level limiting applies).
-- BUG-10 (Low): `GET /api/ideas/[id]` uses `SELECT *` — could expose future sensitive columns.
+Offene Bugs → siehe `features/BUGS.md`
 
 ## Deployment
 

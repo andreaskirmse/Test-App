@@ -55,6 +55,16 @@ After `/architecture`, always reason about the better build order before suggest
 
 All features tracked in `features/INDEX.md`. Every skill reads it at start and updates it when done. Feature specs live in `features/PROJ-X-name.md`.
 
+## Bug Tracking
+
+Open bugs are tracked centrally in `features/BUGS.md` — not in individual feature specs.
+
+**3 Pflichtregeln:**
+
+1. **Nach QA:** Alle offenen Bugs in `features/BUGS.md` eintragen (nicht in den Feature-Spec). Feature-Specs enthalten nur die eine QA-Ergebniszeile: `Acceptance Criteria X/Y passed, Build: PASS`.
+2. **Vor Solution Architect (`/architecture`):** `features/BUGS.md` lesen — relevante offene Bugs aus Vorgänger-Features ins Design einplanen und im Architecture-Doc vermerken.
+3. **Nach Deploy:** `features/BUGS.md` bereinigen — behobene Bugs aus der offenen Liste entfernen und in die "Erledigt"-Tabelle unten verschieben.
+
 ## Key Conventions
 
 - **Feature IDs:** PROJ-1, PROJ-2, etc. (sequential)

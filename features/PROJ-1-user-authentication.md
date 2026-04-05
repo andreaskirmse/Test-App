@@ -163,12 +163,7 @@ Card, Input, Button, Form, Label (all pre-installed)
 
 Acceptance Criteria 10/10 passed, Edge Cases 4/5 passed, Build: PASS
 
-### Open Bugs
-- BUG-4 (Medium): No server-side validation on auth forms — Supabase SDK validates, but violates project security policy. Fix in next sprint.
-- BUG-6 (Medium): UpdatePasswordForm shows "Du wirst gleich weitergeleitet" but never redirects — user stuck on success screen. Fix in next sprint.
-- BUG-7 (Low): No client-side rate limiting on login — only Supabase server-side rate limiting applies.
-- BUG-8 (Low): `GITHUB_ACCESS_TOKEN` in `.env.local` is unused and not documented in `.env.local.example` — remove it.
-- BUG-9 (Low): Login page ignores `?error=callback` query param from failed auth callback — error silently swallowed.
+Offene Bugs → siehe `features/BUGS.md`
 
 ## Deployment
 

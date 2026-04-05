@@ -132,13 +132,7 @@ No new packages — all already installed:
 
 **Re-tested:** 2026-04-02 | Acceptance Criteria 7/8 passed, Build: PASS
 
-### Open Bugs
-- BUG-2 (Medium): GET /api/ideas/[id] missing vote_count and user_has_voted -- uses select("*") without votes join. No detail page UI exists yet. Fix before building detail view.
-- BUG-4 (Low): No rate limiting or debounce on vote toggle -- rapid clicks each send a request. DB constraint prevents data corruption but generates unnecessary load.
-- BUG-5 (Low): get_ideas_paginated RPC uses SECURITY DEFINER, bypassing RLS. Visibility logic duplicated in function WHERE clause. Currently consistent with RLS but may drift.
-
-### Resolved Since Last QA
-- BUG-6 (was Medium): GET /api/ideas/[id] no longer requires auth -- fixed in PROJ-2 fix commit 914975f.
+Offene Bugs → siehe `features/BUGS.md`
 
 ## Deployment
 

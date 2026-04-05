@@ -125,19 +125,11 @@ No new packages required — all existing shadcn/ui components cover the UI need
 
 Acceptance Criteria 6/7 passed, Build: PASS
 
-**Open Bugs:**
-- ~~BUG-8 (Medium): Fixed — page.tsx converted to async Server Component; data fetched server-side via createServerSupabaseClient()~~
-- ~~BUG-9 (Low): Fixed — "Zurück zum Board" umlaut corrected~~
-- ~~BUG-10 (Low): Fixed — counter now uses raw `text.length`, consistent with `maxLength` on the textarea~~
-- BUG-11 (Low): GET comments API returns `user_id` (Supabase auth UUID) in public response -- minor information disclosure, consistent with existing ideas API pattern -- priority: low
-- ~~BUG-12 (Low): Fixed — `page` is now clamped to `totalPages` before use, response always returns a valid page number~~
+Acceptance Criteria 6/7 passed, Build: PASS
 
-**AC that failed:**
-- "Grundlegende Moderation: Keine leeren Kommentare, Spam-Filter (einfach)" -- empty comments are blocked by Zod validation (PASS), but no spam filter of any kind exists beyond empty-check (PARTIAL FAIL)
+Security Audit: keine Critical/High Findings. Production-ready: YES
 
-**Security Audit:** No critical or high findings. UUID validation prevents SQL injection. React escapes all rendered text (no XSS). RLS correctly enforces read-all/insert-own-only. Auth is verified server-side before writes. Rate limiting (10/hour) is implemented. No secrets exposed. No `dangerouslySetInnerHTML` usage.
-
-**Production-ready: YES** (no Critical or High bugs)
+Offene Bugs → siehe `features/BUGS.md`
 
 ## Deployment
 

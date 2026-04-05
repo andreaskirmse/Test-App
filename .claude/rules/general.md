@@ -72,9 +72,10 @@ After `/qa` completes, only write this to the feature spec — nothing more:
 
 **Allowed:**
 - One-line overall result: `Acceptance Criteria X/Y passed, Build: PASS`
-- Open bugs as a short list: `BUG-X (Severity): one-line description — priority`
+- One-line reference: `Offene Bugs → siehe features/BUGS.md`
 
 **Not allowed — never write these to the feature spec:**
+- Bug lists of any kind — open bugs go to `features/BUGS.md`, not here
 - Detailed test case logs (AC-1: [x] ... Status: PASS)
 - Step-by-step reproduction instructions
 - Fixed/resolved bugs — the fix is in the code, the commit has the context
@@ -82,4 +83,12 @@ After `/qa` completes, only write this to the feature spec — nothing more:
 - Regression testing details
 - Cross-browser or responsive testing checklists
 
-**Why:** Feature specs are read by agents working on subsequent features. Detailed QA logs add noise without value — open bugs are the only actionable information.
+**Why:** Open bugs are tracked centrally in `features/BUGS.md`. Feature specs stay clean — only the QA summary line belongs here.
+
+## Bug Tracking (MANDATORY)
+All open bugs are tracked in `features/BUGS.md` — never in individual feature specs.
+
+**3 Pflichtregeln:**
+1. **Nach QA:** Neue offene Bugs in `features/BUGS.md` eintragen. Feature-Spec bekommt nur die eine QA-Ergebniszeile.
+2. **Vor Solution Architect (`/architecture`):** `features/BUGS.md` lesen — relevante offene Bugs aus Vorgänger-Features ins Design einplanen.
+3. **Nach Deploy:** `features/BUGS.md` bereinigen — behobene Bugs aus der offenen Liste entfernen und in die "Erledigt"-Tabelle verschieben.
