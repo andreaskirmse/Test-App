@@ -25,6 +25,7 @@ Ein öffentliches Feature Voting Board, auf dem Community-Mitglieder Produktidee
 | P0 (MVP) | PROJ-4 Voting | Planned |
 | P1 | PROJ-5 Comments | Planned |
 | P1 | PROJ-6 Admin Panel | Planned |
+| P1 | PROJ-7 Landing Page | Planned |
 
 ## Success Metrics
 - Anzahl registrierter Nutzer (Ziel: 50 in den ersten 30 Tagen)
