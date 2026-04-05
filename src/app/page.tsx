@@ -1,5 +1,11 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+
+export const metadata: Metadata = {
+  title: "Voting App für Verbesserungsvorschläge",
+  description: "Teile deine Ideen und stimme für die besten Vorschläge ab.",
+}
 
 export default function Home() {
   return (

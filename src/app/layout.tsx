@@ -6,8 +6,8 @@ import { LogoutButton } from "@/components/auth/logout-button"
 import { createServerSupabaseClient } from "@/lib/supabase-server"
 
 export const metadata: Metadata = {
-  title: "AI Coding Starter Kit",
-  description: "Built with AI Agent Team System",
+  title: "Voting App für Verbesserungsvorschläge",
+  description: "Reiche Ideen ein und stimme für die besten Vorschläge ab.",
 };
 
 export default async function RootLayout({
@@ -31,7 +31,14 @@ export default async function RootLayout({
   return (
     <html lang="de">
       <body className="antialiased">
-        <header className="flex items-center justify-end gap-2 p-4">
+        <header className="flex items-center justify-between gap-2 p-4">
+          <Link
+            href="/"
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Voting App
+          </Link>
+          <div className="flex items-center gap-2">
           {isAdmin && (
             <Link
               href="/admin"
@@ -43,6 +50,7 @@ export default async function RootLayout({
             </Link>
           )}
           {user && <LogoutButton />}
+          </div>
         </header>
         {children}
       </body>
